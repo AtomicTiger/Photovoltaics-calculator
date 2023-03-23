@@ -20,11 +20,8 @@ function Inputs(props) {
           ...prevState.input[0],
           [name]: value
         }]
-      }));
-    }
-    const senddata = (event) => {
-        event.preventDefault();
-        props.onSaveInnerData(data)
+      }))
+      props.onSaveInnerData(data);
     }
   
     return (
@@ -55,7 +52,6 @@ function Inputs(props) {
           <input type="number" name="wp" placeholder="wp" onChange={handleChange} />
           <br></br>
           <br></br>
-          <button type="submit" onClick={senddata}>Send</button>
         </form>
       </div>
     );
