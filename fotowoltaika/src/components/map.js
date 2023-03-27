@@ -1,23 +1,40 @@
-import React from 'react';
-import  './map.css'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
+import { useState, useEffect } from 'react';
+import './map.css'
+import 'leaflet/dist/leaflet.css';
 
-const position = [51.505, -0.09];
+function MyMap(props) {
+  const [clickedLatLng, setClickedLatLng] = useState(null);
 
-function MyMap() {
-  return (
-    <MapContainer center={position} zoom={13} style={{ height: '600px', width: '100%' }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-      />
-      <Marker position={position}>
+  const handleClick = (event) => {
+    setClickedLatLng(event.latlng);
+    
+  }
+  
+  useEffect(() => {
+    if (clickedLatLng !== null) {
+      props.onSaveInnerData(clickedLatLng);
+    }
+  }, [clickedLatLng]);
+  
+  const MyComponent = () => {
+    useMapEvents({
+      click: handleClick,
+    });
+    return null;
+  }
+return (
+  <MapContainer center={[51.505, -0.09]} zoom={13} className="map">
+    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    <MyComponent />
+    {clickedLatLng && (
+      <Marker position={clickedLatLng}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          You clicked at {clickedLatLng.lat.toFixed(4)}, {clickedLatLng.lng.toFixed(4)}
         </Popup>
       </Marker>
-    </MapContainer>
-  );
+    )}
+  </MapContainer>
+);
 }
-
 export default MyMap;

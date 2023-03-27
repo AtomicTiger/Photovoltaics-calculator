@@ -7,6 +7,7 @@ function Container() {
     const [data,setdata] = useState()
     const saveInnerDataHandler = (enterredInnerData) => {
         setdata(enterredInnerData)
+        console.log(enterredInnerData)
     }
   return (
     <div>

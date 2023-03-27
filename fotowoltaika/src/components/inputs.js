@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './inputs.css';
+import Map from './map'
 function Inputs(props) {
     const [data, setData] = useState({
       "input": [
@@ -12,7 +13,6 @@ function Inputs(props) {
         }
       ]
     })
-  
     const handleChange = (event) => {
       const { name, value } = event.target;
       setData(prevState => ({
@@ -23,20 +23,25 @@ function Inputs(props) {
       }))
       props.onSaveInnerData(data);
     }
+    const saveInnerDataHandler = (enteredInnerData) => {
+      setData((prevState) => ({
+        input: [
+          {
+            ...prevState.input[0],
+            lat: enteredInnerData.lat,
+            lon: enteredInnerData.lng,
+          },
+        ],
+      }));
+    };
   
     return (
       <div>
         <form>
-          <label>Latitude</label>
-          <br></br>
-          <input type="number" name="lat" placeholder="lat" onChange={handleChange} />
-          <br></br>
-          <br></br>
-          <label>Longitude</label>
-          <br></br>
-          <input type="number" name="lon" placeholder="lon" onChange={handleChange} />
-          <br></br>
-          <br></br>
+          <label>Chose your location</label>
+          <br/>
+          <br/>
+          <Map onSaveInnerData = {saveInnerDataHandler} />
           <label>Degrees</label>
           <br></br>
           <input type="number" name="deg" placeholder="deg" onChange={handleChange} />
