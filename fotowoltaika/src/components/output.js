@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import LineGraph from "./chart";
-import output from "./data.json"
+import Linegraph from "./chart";
+import './chart.css'
+
 function Output(props) {
     const [totalWh, setTotalWh] = useState(0);
-    const [respons_data, set_response_data] = useState()
-    set_response_data(output)
+    const [responsedata, setresponsedata] = useState();
+    const [buttonClicked, setButtonClicked] = useState(false); // New state variable
+      
     const generate_power = () =>{
         const options = {
             method: 'GET',
@@ -25,29 +27,30 @@ function Output(props) {
               'X-RapidAPI-Key': '',
               'X-RapidAPI-Host': 'solarenergyprediction.p.rapidapi.com'
             }
-          }
-          
-        
+        }
+
         axios.request(options).then(function (response) {
             response.data.output.forEach(item => {
                 setTotalWh(prevTotalWh => prevTotalWh +  item.wh);
-                console.log(totalWh)      
-            });;
+            });
+            setresponsedata(response.data.output);
+            setButtonClicked(true); // Set buttonClicked to true on successful response
         }).catch(function (error) {
             console.error(error);
         });
     }
-  return (
-    <div>
-        <button onClick={generate_power}>How much power will you get ?</button>
-        <h1>You will gain</h1>
-        <br/>
-        <h1>{totalWh}</h1>
-        <br/>
-        <h1> Wats of power</h1>
-        <LineGraph data = {respons_data}/> 
-    </div>
-  );
+    console.log(responsedata)
+    return (
+        <div>
+            <button onClick={generate_power}>How much power will you get ?</button>
+            <h1>You will gain</h1>
+            <br/>
+            <h1>{totalWh}</h1>
+            <br/>
+            <h1> Wats of power</h1>
+            {buttonClicked && <Linegraph className="chart" data={responsedata} />} 
+        </div>
+    );
 }
 
 export default Output;
