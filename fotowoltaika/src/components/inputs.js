@@ -1,39 +1,46 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import './inputs.css';
 import Map from './map'
 function Inputs(props) {
-    const [data, setData] = useState({
-      "input": [
-        {
-          deg: "",
-          lat: "",
-          lon: "",
-          az: "",
-          wp: ""
-        }
-      ]
-    })
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-      setData(prevState => ({
-        input: [{
-          ...prevState.input[0],
-          [name]: value
-        }]
-      }))
+  const [data, setData] = useState({
+    "input": [
+      {
+        deg: "",
+        lat: "",
+        lon: "",
+        az: "",
+        wp: ""
+      }
+    ]
+  });
+  
+  useEffect(() => {
+    if (data.input[0].wp !== "") {
       props.onSaveInnerData(data);
     }
-    const saveInnerDataHandler = (enteredInnerData) => {
-      setData((prevState) => ({
-        input: [
-          {
-            ...prevState.input[0],
-            lat: enteredInnerData.lat,
-            lon: enteredInnerData.lng,
-          },
-        ],
-      }));
-    };
+  }, [data, props]);
+  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setData(prevState => ({
+      input: [{
+        ...prevState.input[0],
+        [name]: value
+      }]
+    }));
+  }
+  
+  const saveInnerDataHandler = (enteredInnerData) => {
+    setData((prevState) => ({
+      input: [
+        {
+          ...prevState.input[0],
+          lat: enteredInnerData.lat,
+          lon: enteredInnerData.lng,
+        },
+      ],
+    }));
+  };
   
     return (
       <div>
