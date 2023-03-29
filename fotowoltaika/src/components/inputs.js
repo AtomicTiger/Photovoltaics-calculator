@@ -40,8 +40,8 @@ function Inputs(props) {
         <form>
           <label>Chose your location</label>
           <br/>
-          <br/>
           <Map onSaveInnerData = {saveInnerDataHandler} />
+          <br/>
           <label>Degrees</label>
           <br></br>
           <input type="number" name="deg" placeholder="deg" onChange={handleChange} />

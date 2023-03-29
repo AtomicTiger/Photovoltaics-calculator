@@ -1,4 +1,11 @@
 .map {
   height: 500px;
   width: 1000px;
+  border: 1px solid #d34b4b;
+  border-radius: 3%;
+}
+@media only screen and (max-width: 1000px) {
+  .map{
+    width: 400px;
+  }
 }

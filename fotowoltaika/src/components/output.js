@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import Linegraph from "./chart";
+import Button from 'react-bootstrap/Button';
 import './chart.css'
 
 function Output(props) {
@@ -42,11 +43,10 @@ function Output(props) {
     console.log(responsedata)
     return (
         <div>
-            <button onClick={generate_power}>How much power will you get ?</button>
+            <Button variant="danger" onClick={generate_power}>How much power will you get ?</Button>
+            <br/><br/>
             <h1>You will gain</h1>
-            <br/>
             <h1>{totalWh}</h1>
-            <br/>
             <h1> Wats of power</h1>
             {buttonClicked && <Linegraph className="chart" data={responsedata} />} 
         </div>
